@@ -1,0 +1,4 @@
+id_cliente;email;senha;nome;telefone;logradouro;numero;complemento;bairro;cidade;estado;cep;referencia
+1;joaoSilva@gmail.com;123456;João Silva;(11) 98765-4321;Rua das Flores;120;Apto 202;Centro;São Paulo;SP;01010-010;Próximo ao supermercado Extra
+2;mariaOliveira@gmail.com;1458;Maria Oliveira;(19) 98123-4567;Avenida Brasil;450;Casa;Jardim Bela Vista;Campinas;SP;13040-130;Em frente à padaria Pão Doce
+3;carloPereira@gmail.com;1234567;Carlos Pereira;(21) 99678-9102;Rua dos Ipês;85;Bloco B, Apto 15;Vila Nova;Rio de Janeiro;RJ;22030-060;Ao lado da academia FitClub
