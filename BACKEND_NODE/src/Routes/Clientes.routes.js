@@ -15,5 +15,5 @@ router.get("/clientes/:id_cliente", clientes.lerClientesId)
 //Definindo o corpo da URL para criar um cliente novo
 router.post("/clientes", clientes.criandoNovoCliente)
 
-//Exportando o router
+//Exportando o router para ser usado no url
 module.exports = router;
