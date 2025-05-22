@@ -4,6 +4,15 @@ const clientes = require('../models/Clientes.model.js')
 //Importando o arquivo do DAO, atraves de uma variavel
 const conexao = require('../dao/pizzaria.dao.js')
 
+//Importando a varicel do bcrypt para codificar a senha
+const bcrypt = require('bcrypt')
+
+//Importando a variacel do crypto para decodifiar a senha.
+const crypto = require('crypto-js')
+
+//Criando a variavel que define quantas vezes a senha vai ser randorizda.
+const saltRounds = 10
+
 const lerTodos = (req, res) => {
     //Atribuindo a variavel string a função lerTodos
     let string = clientes.lerTodos()
@@ -52,21 +61,38 @@ const lerClientesId = (req, res) => {
         }
     })
 }
+
 //Criando uma variavel que cria um novo cliente
-const criandoNovoCliente = (req, res) => {
+const criandoNovoCliente = async (req, res) => {
+    //Tratramento de erro, 'tente'
+    try{
+    //Atribui a senha vque foi digitada e armazena na variavel senha
+    const senha = req.body.senha
+    //Gera um hash seguro da senha
+    const hash = await bcrypt.hash(senha, saltRounds)
+    //Atualiza a senha ao cadastrar ja usando o hash
+    req.body.senha = hash
     //Criada a variavel que hospeda a função que ira ser usada
     let string = clientes.criarCliente(req.body)
+
     //Criado a conexão com o banco de dados
     conexao.query(string, (err, result) => {
-        //Criado uma condicional para verificar se houve algum erro, caso não haja, a condicional cexibira o resultado
+        //Criado uma condicional para verificar se houve algum erro, caso não haja, a condicional exibira o resultado
         if (err == null) {
             //Status 201 significa que a requisição fo bem sucedida e um novo cliente foi criado no banco de dados.
             res.status(201).json(result).end()
         } else {
-            res.status(400).end()
+            console.error("Erro no banco", err)
+            res.status(400).json(result).end()
         }
     })
-
+    //Tratamento de erro
+    } catch (error){
+        //Caso de erro no hash ou qualquer outro erro no try.
+        console.error("Erro ao gerar hash: ", error )
+        //Status 500 significa erro interno
+        res.status(500).json({erro: 'Erro interno ao processar a senha.'})
+    }
 }
 
 //Exportando as funções para que sejam usadas em outro arquivo;
