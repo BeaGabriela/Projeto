@@ -13,6 +13,11 @@ const LerClientePeloId = (model) =>{
     return `SELECT * FROM Clientes WHERE id_cliente=${model.id_cliente};`
 }
 
+//Cria uma função que retorna a leitura das tabela de clientes, filtrando pelo email do qual deseja ser vizualizado.
+const LerClientePeloEmail = (model) =>{
+    return `SELECT * FROM Clientes WHERE email=${model.email};`
+}
+
 //Cria uma função que retorna a leitura da tabela de cliente filtrando pelo nome
 const LerClientePeloNome = (model) =>{
     return `SELECT * FROM Clientes WHERE nome=${model.nome};`
@@ -30,6 +35,7 @@ module.exports = {
     lerTodos,
     Logar,
     LerClientePeloId,
+    LerClientePeloEmail,
     LerClientePeloNome,
     criarCliente
 }
