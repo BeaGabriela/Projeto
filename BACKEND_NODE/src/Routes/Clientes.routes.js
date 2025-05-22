@@ -11,7 +11,7 @@ router.get("/clientes", clientes.lerTodos)
 //Definindo o corpo da URL para logar
 router.post('/logar', clientes.Logar)
 //Definindo o corpo da URL para puxar clientes filtrados pelo id
-router.get("/clientes/:id_cliente", clientes.lerClientesId)
+// router.get("/clientes/:id_cliente", clientes.lerClientesId)
 //Definindo o corpo da URL para criar um cliente novo
 router.post("/clientes", clientes.criandoNovoCliente)
 
