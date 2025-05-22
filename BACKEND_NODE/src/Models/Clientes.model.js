@@ -20,7 +20,7 @@ const LerClientePeloNome = (model) =>{
 
 //Cria uma função que possibilita a criação de novos clientes.
 const criarCliente = (model) =>{
-    return `INSERT INTO Clientes VALUES(default, '${model.nome}','${model.telefone}','${model.logradouro}',${model.numero},'${model.complemento}','${model.bairro}','${model.cidade}', '${model.estado}', ${model.cep}, '${model.referencia}')`
+    return `INSERT INTO Clientes VALUES(default, '${model.email}', '${model.senha}','${model.nome}','${model.telefone}','${model.logradouro}',${model.numero},'${model.complemento}','${model.bairro}','${model.cidade}', '${model.estado}', ${model.cep}, '${model.referencia}')`
 }
 
 
