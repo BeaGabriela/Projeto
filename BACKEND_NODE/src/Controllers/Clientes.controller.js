@@ -28,6 +28,8 @@ const lerTodos = (req, res) => {
         }
     })
 }
+
+
 //Criando uma função que compara o email e a senha fornecida pelo usuario e a do banco de dados.
 const Logar = (req, res) => {
     //Atribuindo a variavel string a função logar.
@@ -45,22 +47,7 @@ const Logar = (req, res) => {
 
 }
 
-//Criando uma função que busca o cliente filtrando pelo id
-const lerClientesId = (req, res) => {
-    //Variavel criada para requisitar o numero do id, atraves do corpo do json. Assim o cliente será filtrado.
-    let string = clientes.LerClientePeloId(req.params)
-    //Executa uma consulta no banco de dados usando o retorno da função no model.
-    conexao.query(string, (err, result) => {
-        //verifica se não houve erro na requisição, e caso o erro for igual a null, ou seja, mão houver erro, então ele continua dentro do loop
-        if (err == null) {
-            //O status 200 que significa 'ok' aparece na tela em junção com o json e o resultado
-            res.status(200).json(result).end()
-        } else {
-            //Caso haja erro, o status 400 que signifa que houve um erro de digitação ou algo semelhante.
-            res.status(400).end()
-        }
-    })
-}
+
 
 //Criando uma variavel que cria um novo cliente
 const criandoNovoCliente = async (req, res) => {
@@ -97,8 +84,7 @@ const criandoNovoCliente = async (req, res) => {
 
 //Exportando as funções para que sejam usadas em outro arquivo;
 module.exports ={
-    lerTodos,
+     lerTodos,
     Logar,
-    lerClientesId,
     criandoNovoCliente
 }
