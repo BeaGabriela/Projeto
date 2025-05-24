@@ -6,7 +6,7 @@ USE Pizzaria; --Define o banco de dadoa a ser usado;
 CREATE TABLE Clientes(
     id_cliente INTEGER PRIMARY KEY AUTO_INCREMENT,
 
-    email VARCHAR(30) NOT NULL,
+    email VARCHAR(100) NOT NULL,
     senha VARCHAR(255) NOT NULL,
 
     nome VARCHAR(25) NOT NULL,
