@@ -29,7 +29,6 @@ const lerTodos = (req, res) => {
     })
 }
 
-
 //Criando uma função que compara o email e a senha fornecida pelo usuario e a do banco de dados.
 const Logar = async (req, res) => {
     //Definindo uma constante para armazenar o email e a senha digitada.
