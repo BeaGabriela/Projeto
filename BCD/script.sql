@@ -7,7 +7,7 @@ CREATE TABLE Clientes(
     id_cliente INTEGER PRIMARY KEY AUTO_INCREMENT,
 
     email VARCHAR(30) NOT NULL,
-    senha VARCHAR(30) NOT NULL,
+    senha VARCHAR(255) NOT NULL,
 
     nome VARCHAR(25) NOT NULL,
     telefone VARCHAR(25) NOT NULL,
