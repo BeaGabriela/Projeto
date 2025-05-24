@@ -4,9 +4,10 @@ const lerTodos = () => {
 }
 
 //Criando a variavel que retorna o email digitado e a senha. Apenas se conter no banco de dados.
-const Logar = (model) =>{
-    return `SELECT * FROM Clientes WHERE email='${model.email}' AND senha='${model.senha}'`
-}
+const Logar = () => {
+    return "SELECT * FROM clientes WHERE email = ?";
+};
+
 
 //Cria uma função que retorna a leitura das tabela de clientes, filtrando pelo id do qual deseja ser vizualizado.
 const LerClientePeloId = (model) =>{
