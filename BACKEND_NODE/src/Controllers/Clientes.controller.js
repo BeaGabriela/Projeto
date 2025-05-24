@@ -31,23 +31,42 @@ const lerTodos = (req, res) => {
 
 
 //Criando uma função que compara o email e a senha fornecida pelo usuario e a do banco de dados.
-const Logar = (req, res) => {
-    //Atribuindo a variavel string a função logar.
-    let string = clientes.Logar(req.body)
-    //Executa a funçaõ no banco de dados
-    conexao.query(string,(err, result) => {
-        //Se não houve erros, ela dá o status 201 de criado com sucesso e o json
-        if(err == null){
-            res.status(201).json(result).end()
-            //Se nao, ela devolve o status 400, que é erro de digitação ou algo semelhante. 
-        }else{
-            res.status(400).end()
+const Logar = async (req, res) => {
+    //Definindo uma constante para armazenar o email e a senha digitada.
+    const {email, senha} = req.body
+    
+    //Verifica se o email ou a senha estão vazios
+    if (!email || !senha) {
+        return res.status(400).json({ erro: "Email e senha são obrigatórios!" });
+    }
+
+    //Criando uma constante para armazenar a função que será chamada no banco de dados
+    const string = clientes.Logar();
+    //Criando conexão com o banco de dados, passando o email como paramentro.
+    conexao.query(string, [email], async (err, result) => {
+        //Criando uma verificação, se houver erro, trara o status 500, que é erro no servidor.
+        if (err) {
+            console.error("Erro ao consultar banco:", err);
+            return res.status(500).json({ erro: "Erro no servidor" });
         }
-    })
-
+        //Se o result retornar vazio, quer dizer que o email digitado, ou não existe ou foi digitado de uma forma diferente que está salvo no banco de dados,
+        if (result.length === 0) {
+            return res.status(404).json({ erro: "Usuário não encontrado" });
+        }
+        //Criando umma constate que armazena o result, filtrando pelo primeiro vetor. [0]
+        const usuario = result[0];
+        //Criando uma variavel que compara a senha digitada com a senha salva no banco de dados
+        const confere = await bcrypt.compare(senha, usuario.senha);
+        
+        //Se as senhas forem iguais, então retornara status 200 de ok, e um status de login bem-sucedido.
+        if (confere) {
+            res.status(200).json({ mensagem: "Login bem-sucedido" });
+        //Se não, o login de 401 apareceré na tela, dizendo que houve um erro de digitação, ou algo semelhante.
+        } else {
+            res.status(401).json({ erro: "Senha inválida" });
+        }
+    });
 }
-
-
 
 //Criando uma variavel que cria um novo cliente
 const criandoNovoCliente = async (req, res) => {
@@ -82,9 +101,10 @@ const criandoNovoCliente = async (req, res) => {
     }
 }
 
+
 //Exportando as funções para que sejam usadas em outro arquivo;
 module.exports ={
-     lerTodos,
+    lerTodos,
     Logar,
     criandoNovoCliente
 }
