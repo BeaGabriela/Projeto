@@ -10,6 +10,9 @@ const bcrypt = require('bcrypt')
 //Importando a variacel do crypto para decodifiar a senha.
 const crypto = require('crypto-js')
 
+//Criando uma varivel que armazena no token
+const jwt = require("jsonwebtoken")
+
 //Criando a variavel que define quantas vezes a senha vai ser randorizda.
 const saltRounds = 10
 
@@ -32,8 +35,8 @@ const lerTodos = (req, res) => {
 //Criando uma função que compara o email e a senha fornecida pelo usuario e a do banco de dados.
 const Logar = async (req, res) => {
     //Definindo uma constante para armazenar o email e a senha digitada.
-    const {email, senha} = req.body
-    
+    const { email, senha } = req.body
+
     //Verifica se o email ou a senha estão vazios
     if (!email || !senha) {
         return res.status(400).json({ erro: "Email e senha são obrigatórios!" });
@@ -56,11 +59,23 @@ const Logar = async (req, res) => {
         const usuario = result[0];
         //Criando uma variavel que compara a senha digitada com a senha salva no banco de dados
         const confere = await bcrypt.compare(senha, usuario.senha);
-        
+
         //Se as senhas forem iguais, então retornara status 200 de ok, e um status de login bem-sucedido.
         if (confere) {
-            res.status(200).json({ mensagem: "Login bem-sucedido" });
-        //Se não, o login de 401 apareceré na tela, dizendo que houve um erro de digitação, ou algo semelhante.
+            //Criando o token
+            const token = jwt.sign(
+                { id: usuario.id, email: usuario.email }, //Dados que vão dentro do token
+                process.env.JWT_SECRET, //Chave que contem no arquivo .env
+                { expiresIn: "1h" } // Tempo de expiração
+            )
+            //E retorna o token
+            res.status(200).json({
+                mensagem: "Login bem-sucedido",
+                token: token,
+                usuario: {id: usuario.id, nome: usuario.nome, email: usuario.email}
+            });
+            console.log(token)
+            //Se não, o login de 401 apareceré na tela, dizendo que houve um erro de digitação, ou algo semelhante.
         } else {
             res.status(401).json({ erro: "Senha inválida" });
         }
@@ -70,39 +85,39 @@ const Logar = async (req, res) => {
 //Criando uma variavel que cria um novo cliente
 const criandoNovoCliente = async (req, res) => {
     //Tratramento de erro, 'tente'
-    try{
-    //Atribui a senha vque foi digitada e armazena na variavel senha
-    const senha = req.body.senha
-    //Gera um hash seguro da senha
-    const hash = await bcrypt.hash(senha, saltRounds)
-    //Atualiza a senha ao cadastrar ja usando o hash
-    req.body.senha = hash
-    //Criada a variavel que hospeda a função que ira ser usada
-    let string = clientes.criarCliente(req.body)
+    try {
+        //Atribui a senha vque foi digitada e armazena na variavel senha
+        const senha = req.body.senha
+        //Gera um hash seguro da senha
+        const hash = await bcrypt.hash(senha, saltRounds)
+        //Atualiza a senha ao cadastrar ja usando o hash
+        req.body.senha = hash
+        //Criada a variavel que hospeda a função que ira ser usada
+        let string = clientes.criarCliente(req.body)
 
-    //Criado a conexão com o banco de dados
-    conexao.query(string, (err, result) => {
-        //Criado uma condicional para verificar se houve algum erro, caso não haja, a condicional exibira o resultado
-        if (err == null) {
-            //Status 201 significa que a requisição fo bem sucedida e um novo cliente foi criado no banco de dados.
-            res.status(201).json(result).end()
-        } else {
-            console.error("Erro no banco", err)
-            res.status(400).json(result).end()
-        }
-    })
-    //Tratamento de erro
-    } catch (error){
+        //Criado a conexão com o banco de dados
+        conexao.query(string, (err, result) => {
+            //Criado uma condicional para verificar se houve algum erro, caso não haja, a condicional exibira o resultado
+            if (err == null) {
+                //Status 201 significa que a requisição fo bem sucedida e um novo cliente foi criado no banco de dados.
+                res.status(201).json(result).end()
+            } else {
+                console.error("Erro no banco", err)
+                res.status(400).json(result).end()
+            }
+        })
+        //Tratamento de erro
+    } catch (error) {
         //Caso de erro no hash ou qualquer outro erro no try.
-        console.error("Erro ao gerar hash: ", error )
+        console.error("Erro ao gerar hash: ", error)
         //Status 500 significa erro interno
-        res.status(500).json({erro: 'Erro interno ao processar a senha.'})
+        res.status(500).json({ erro: 'Erro interno ao processar a senha.' })
     }
 }
 
 
 //Exportando as funções para que sejam usadas em outro arquivo;
-module.exports ={
+module.exports = {
     lerTodos,
     Logar,
     criandoNovoCliente
