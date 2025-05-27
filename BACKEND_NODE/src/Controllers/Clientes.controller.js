@@ -16,9 +16,26 @@ const jwt = require("jsonwebtoken")
 //Criando a variavel que define quantas vezes a senha vai ser randorizda.
 const saltRounds = 10
 
-const lerTodos = (req, res) => {
+//Criando função que retornara a leitura de todos os clientes
+const LerClientes = (req, res) => {
     //Atribuindo a variavel string a função lerTodos
-    let string = clientes.lerTodos()
+    let string = clientes.LerClientes()
+    //executa uma consulta no banco de dados, que esta no return do 'lerTodos()', e em seguida passa dois paramentros, um de erro e outro de resultado
+    conexao.query(string, (err, result) => {
+        //Caso não haja erro, o programa teve uma consulta bem-sucedida.
+        if (err == null) {
+            //Com isso, o status 200 significa que foi bem sucedido, e em seguida todos os clientes aparecem em um json.
+            res.status(200).json(result).end()
+        } else {
+            //Caso contrario, aparecera o status 400 que indica que a requisição enviada esta incorreta ou malformada. 
+            res.status(400).end()
+        }
+    })
+}
+//Criada função que retorna a leitura do cliente, filtando pelo id
+const LerClientesFiltradoId = (req, res) => {
+    //Atribuindo a variavel string a função lerTodos
+    let string = clientes.LerClientesFiltradoId(req.params)
     //executa uma consulta no banco de dados, que esta no return do 'lerTodos()', e em seguida passa dois paramentros, um de erro e outro de resultado
     conexao.query(string, (err, result) => {
         //Caso não haja erro, o programa teve uma consulta bem-sucedida.
@@ -82,8 +99,25 @@ const Logar = async (req, res) => {
     });
 }
 
+//Criando função que lê os dados pessoais da pessoa logada
+const LerInformacoesPessoais = (req, res) => {
+    //Atribuindo a variavel string a função LerDadosPessoais
+    let string = clientes.LerInformacoesPessoais(req.body)
+    //executa uma consulta no banco de dados, que esta no return do 'lerTodos()', e em seguida passa dois paramentros, um de erro e outro de resultado
+    conexao.query(string, (err, result) => {
+        //Caso não haja erro, o programa teve uma consulta bem-sucedida.
+        if (err == null) {
+            //Com isso, o status 200 significa que foi bem sucedido, e em seguida todos os clientes aparecem em um json.
+            res.status(200).json(result).end()
+        } else {
+            //Caso contrario, aparecera o status 400 que indica que a requisição enviada esta incorreta ou malformada. 
+            res.status(400).end()
+        }
+    })
+}
+
 //Criando uma variavel que cria um novo cliente
-const criandoNovoCliente = async (req, res) => {
+const CriarCliente = async (req, res) => {
     //Tratramento de erro, 'tente'
     try {
         //Atribui a senha vque foi digitada e armazena na variavel senha
@@ -93,7 +127,7 @@ const criandoNovoCliente = async (req, res) => {
         //Atualiza a senha ao cadastrar ja usando o hash
         req.body.senha = hash
         //Criada a variavel que hospeda a função que ira ser usada
-        let string = clientes.criarCliente(req.body)
+        let string = clientes.CriarCliente(req.body)
 
         //Criado a conexão com o banco de dados
         conexao.query(string, (err, result) => {
@@ -115,10 +149,57 @@ const criandoNovoCliente = async (req, res) => {
     }
 }
 
+// Criada uma função para alterar os dados pessoais do usuário logado
+const AlterarDadosPessoais = async (req, res) => {
+    // Se a senha foi informada, gera o hash
+    if (req.body.senha) {
+        try {
+            const hash = await bcrypt.hash(req.body.senha, saltRounds);
+            req.body.senha = hash;
+        } catch (err) {
+            return res.status(500).json({ erro: "Erro ao criptografar a senha" });
+        }
+    }
+
+    // Definindo uma variável para armazenar a função que irá ser chamada no banco de dados
+    let string = clientes.AlterarDadosPessoais(req.body);
+
+    // Criando conexão com o banco de dados
+    conexao.query(string, (err, result) => {
+        // Se não houver erro, retorna um status 200, que significa 'ok' e o json
+        if (err == null) {
+            res.status(200).json(result).end();
+        } else {
+            // Se houver erro, retorna o erro 400
+            res.status(400).json({ erro: "Erro ao alterar dados" });
+        }
+    });
+};
+
+//Função para deletar cadastro do cliente
+const DeletarCadastro = (req, res) => {
+    //Criando uma variavel para chamar o return no banco de dados
+    let string = clientes.DeletarCadastro(req.body)
+    //Criando conexão com o banco de dados
+    conexao.query(string, (err, result) =>{
+        //Se não houver erro, aparece o status 200 e a mensagem.
+        if(err == null){
+            res.status(200).json("Usuario deletado com sucesso").end()
+        //Se houver erro, retorna o erro 400, que é erro de digitação/solicitação corrompiada e uma mensagem
+        }else{
+            res.status(400).json({erro: "Erro ao deletar conta"})
+        }
+    })
+}
 
 //Exportando as funções para que sejam usadas em outro arquivo;
 module.exports = {
-    lerTodos,
+    LerClientes,
+    LerClientesFiltradoId,
     Logar,
-    criandoNovoCliente
+    LerInformacoesPessoais,
+    CriarCliente,
+    AlterarDadosPessoais,
+    DeletarCadastro
+
 }
