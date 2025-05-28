@@ -10,11 +10,15 @@ const cors = require('cors')
 //Criando uma variavel que armazenara todo o meu arquivo clientes.routes, e com ele eu posso acessar as funções
 const clientes = require('./src/Routes/Clientes.routes.js')
 
+//Criando uma variavel que armazenara todo o meu arquivo pizzas.routes, e com ele eu posso acessar as funções
+const pizzas = require('./src/Routes/Pizzas.routes.js')
+
 //Criando a chamada de todos os mecanismos e dependencias a serem usada, inclusive a variavel setada para acessar o clientes.routes
 const app = express()
     .use(express.json())
     .use(cors())
     .use(clientes)
+    .use(pizzas)
 
 
 //Chamando o app e atribuindo a ele a porta a ser executada,e  tambem um console log, que mostrara no console em qual porta o serviço está sendo executado.
