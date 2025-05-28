@@ -1,5 +1,5 @@
 //Importando o arquivo do models, atraves de uma variavel
-const clientes = require('../models/Clientes.model.js')
+const clientes = require('../Models/Clientes.model.js')
 
 //Importando o arquivo do DAO, atraves de uma variavel
 const conexao = require('../dao/pizzaria.dao.js')
