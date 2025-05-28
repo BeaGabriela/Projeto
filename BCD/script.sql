@@ -17,17 +17,17 @@ CREATE TABLE Clientes(
     bairro VARCHAR(30),
     cidade VARCHAR(30),
     estado VARCHAR(30),
-    cep NUMERIC(8,2),
+    cep INTEGER,
     referencia VARCHAR(30)
 );
 
 --Criando um arquivo que sempre que o banco for reiniciado, a tabela clientes começa com alguns clientes.
-LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Pizzaria/BCD/dados/cliente.csv'
-INTO TABLE Clientes
-FIELDS TERMINATED BY ';'
-ENCLOSED BY '"'
-LINES TERMINATED BY "\r\n"
-IGNORE 1 ROWS;
+-- LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Pizzaria/BCD/dados/cliente.csv'
+-- INTO TABLE Clientes
+-- FIELDS TERMINATED BY ';'
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY "\r\n"
+-- IGNORE 1 ROWS;
 
 
 --Criando a tabela de pizzas.
@@ -59,7 +59,7 @@ CREATE TABLE Pedidos(
     FOREIGN KEY (cliente_id) REFERENCES Clientes(id_cliente)
 );
 
---Criando um arquivo para sempre que o banco de dados precisar ser criado novamente, terá alguns pedidos já agregados a tabela pedidos;
+-- --Criando um arquivo para sempre que o banco de dados precisar ser criado novamente, terá alguns pedidos já agregados a tabela pedidos;
 LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Pizzaria/BCD/dados/pedidos.csv'
 INTO TABLE Pedidos
 FIELDS TERMINATED BY ';'
@@ -76,7 +76,7 @@ CREATE TABLE item_pedido(
     valor DECIMAL(4,2)
 );
 
---Criando um arquivo para sempre que o banco de dados precisar ser criado novamente, terá alguns pedidos já agregados a tabela item_pedidos;
+-- --Criando um arquivo para sempre que o banco de dados precisar ser criado novamente, terá alguns pedidos já agregados a tabela item_pedidos;
 LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Pizzaria/BCD/dados/item_pedido.csv'
 INTO TABLE item_pedido
 FIELDS TERMINATED BY ';'
