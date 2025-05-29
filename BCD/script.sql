@@ -2,6 +2,23 @@ DROP DATABASE IF EXISTS Pizzaria; --Apaga um banco de dados existente com o mesm
 CREATE DATABASE Pizzaria charset=UTF8 collate utf8_general_ci; --Cria um banco de dados do nome pizzaria e passa a confuguração UTP8
 USE Pizzaria; --Define o banco de dadoa a ser usado;
 
+--Criando um atabela de funcioarios para definir quais funcionarios podem editar e acrescentar novas pizzas na tabela
+CREATE TABLE Funcionarios(
+    id_funcionario INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(40) NOT NULL,
+    cpf INTEGER NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    cargo VARCHAR(30) NOT NULL
+);
+
+--Criando um arquivo que sempre que o banco for reiniciado, a tabela FUNCIOANRIOS começa com alguns.
+LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Projeto/BCD/dados/funcionarios.csv'
+INTO TABLE Funcionarios
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY "\r\n"
+IGNORE 1 ROWS;
+
 --Criando a tabela de clientes;
 CREATE TABLE Clientes(
     id_cliente INTEGER PRIMARY KEY AUTO_INCREMENT,
