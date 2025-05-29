@@ -20,7 +20,7 @@ const AlterarPizza = (model) => {
     //Criado varias condicioanis para verificar se aquele atrbuto vai ser ou nao modificado.
     if(model.nome) updates.push(`nome = '${model.nome}'`)
     if(model.descricao) updates.push(`descricao = '${model.descricao}'`)
-    if(model.valor) updates.push(`valor = '${model.valor}'`)
+    if(model.valor) updates.push(`valor = ${model.valor}`)
     //caso seja, ele alterara apenas o atributo desejado.
     return `UPDATE Pizzas SET ${updates.join(', ')} WHERE id_pizza = ${model.id_pizza};`;
 }
