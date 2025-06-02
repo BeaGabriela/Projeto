@@ -7,9 +7,9 @@ const router = express.Router()
 const funcionarios = require('../Controllers/Funcionarios.controller.js')
 
 //Criando uma variavel que herda a funções do arquivo middleware
-const Middle = require('../Middleware/Middleware_cargo.js');
+const verificaPermissao = require('../Middleware/Middleware_cargo.js');
 
-const ValidarToken = require('../Middleware/Middleware');
+const Middle = require('../Middleware/Middleware');
 
 //Definindo o corpo da URL, para puxr todos os funcionarois.
 router.get("/funcionarios", funcionarios.MostrarFuncionarios)
@@ -18,16 +18,16 @@ router.get("/funcionarios", funcionarios.MostrarFuncionarios)
 router.get("/funcionarios/:id_funcionario", funcionarios.MonstrarFuncionarioID)
 
 //Definindo o corpo da URL para que o funcionario possa logar
-router.post('/funcionario/logar', funcionarios.Logar)
+router.post('/funcionario/logar',funcionarios.Logar)
 
-//Definindo o corpo da URL para criar um funcioario novo
-router.post("/funcionario", funcionarios.CriarFuncionario)
+//Definindo o corpo da URL para criar um funcioario novo, de acordo com o funcionario logado
+router.post("/funcionario", Middle.Autenticar, verificaPermissao(['Gerente', 'Lider']), funcionarios.CriarFuncionario)
 
-//Definindo o corpo da URL para alterar dados pessoais
-router.put("/funcionario/alterar", funcionarios.AlterarDadosFuncionario)
+//Definindo o corpo da URL para alterar dados pessoais,de acordo com o funcionario logado
+router.put("/funcionario/alterar", Middle.Autenticar, verificaPermissao(['Gerente', 'Lider']), funcionarios.AlterarDadosFuncionario)
 
-//Definindo o corpo da URL para deletar cadastro
-router.delete("/funcionario/deletar" ,funcionarios.DeletarFuncionario)
+//Definindo o corpo da URL para deletar cadastro, de acordo com o funcionario logado
+router.delete("/funcionario/deletar",  Middle.Autenticar, verificaPermissao(['Gerente', 'Lider']),funcionarios.DeletarFuncionario)
 
 //Exportando o router para ser usado no url
 module.exports = router;
