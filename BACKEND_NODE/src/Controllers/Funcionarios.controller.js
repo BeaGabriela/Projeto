@@ -83,7 +83,7 @@ const Logar = async (req, res) => {
             //Criando o token
             const token = jwt.sign(
                 { id: usuario.id, cpf: usuario.cpf, cargo:usuario.cargo }, //Dados que vão dentro do token
-                process.env.JWT_CARGO, //Chave que contem no arquivo .env
+                process.env.JWT_SECRET, //Chave que contem no arquivo .env
                 { expiresIn: "1h" } // Tempo de expiração
             )
             //E retorna o token
