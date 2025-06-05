@@ -1,0 +1,15 @@
+Editar as seguintes variveis do banco de dados>:
+    Tabela Clientes:
+    Variveis do tipo varchar a aumentar de bits:
+        Logradouro,
+        Complemento,
+        Bairro,
+        Estado,
+        Referencia
+
+    Tabela Pizzas:
+        Nome, descricao - Aumentar de tamanho,
+        
+    Tabela de itm_pedido:
+        quantidade - Trocar por INT
+
