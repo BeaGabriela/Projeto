@@ -1,0 +1,32 @@
+[
+  {
+    "id_cliente": 1,
+    "email": "joana@gmail.com",
+    "senha": "$2b$10$Sj7TVF6IW.OrI2sR2HDt7OllOs3z3GNJvhCsLv4aRcvMK6rgYu2BG",
+    "nome": "Joana",
+    "telefone": "061555-2991",
+    "logradouro": "Primaveiras",
+    "numero": 800,
+    "complemento": "avenida boa vontade",
+    "bairro": "cuia",
+    "cidade": "Maranhão",
+    "estado": "Maranhão",
+    "cep": 5852502,
+    "referencia": "delegacia"
+  },
+  {
+    "id_cliente": 3,
+    "email": "matheus@gmail.com",
+    "senha": "$2b$10$cn8aozAcM8QeAeulJrvGF.BClNcXCVZXPwJ5iGfo3pKG5lgFpVdbS",
+    "nome": "Matheus",
+    "telefone": "908510-2991",
+    "logradouro": "Primaveiras",
+    "numero": 500,
+    "complemento": "avenida amanhecer",
+    "bairro": "mare",
+    "cidade": "Cuiaba",
+    "estado": "Cuiaba",
+    "cep": 8503,
+    "referencia": "hospital"
+  }
+]
