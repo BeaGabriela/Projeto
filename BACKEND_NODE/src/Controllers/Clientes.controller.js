@@ -2,7 +2,7 @@
 const clientes = require('../Models/Clientes.model.js')
 
 //Importando o arquivo do DAO, atraves de uma variavel
-const conexao = require('../dao/pizzaria.dao.js')
+const conexao = require('../Dao/pizzaria.dao.js')
 
 //Importando a varicel do bcrypt para codificar a senha
 const bcrypt = require('bcrypt')
@@ -15,6 +15,9 @@ const jwt = require("jsonwebtoken")
 
 //Criando a variavel que define quantas vezes a senha vai ser randorizda.
 const saltRounds = 10
+
+//Cria uma variavel que armazena a função do backup
+const { exportarClientes } = require("../Utils/backup.js");
 
 //Criando função que retornara a leitura de todos os clientes
 const LerClientes = (req, res) => {
@@ -133,8 +136,11 @@ const CriarCliente = async (req, res) => {
         conexao.query(string, (err, result) => {
             //Criado uma condicional para verificar se houve algum erro, caso não haja, a condicional exibira o resultado
             if (err == null) {
+                //Editada o backup quando adiionados novos clientes.
+                exportarClientes()
                 //Status 201 significa que a requisição fo bem sucedida e um novo cliente foi criado no banco de dados.
                 res.status(201).json(result).end()
+
             } else {
                 console.error("Erro no banco", err)
                 res.status(400).json(result).end()
@@ -168,6 +174,8 @@ const AlterarDadosPessoais = async (req, res) => {
     conexao.query(string, (err, result) => {
         // Se não houver erro, retorna um status 200, que significa 'ok' e o json
         if (err == null) {
+            //Edita o backup
+            exportarClientes()
             res.status(200).json(result).end();
         } else {
             // Se houver erro, retorna o erro 400
@@ -182,6 +190,8 @@ const DeletarCadastro = (req, res) => {
     let string = clientes.DeletarCadastro(req.body)
     //Criando conexão com o banco de dados
     conexao.query(string, (err, result) =>{
+        //Edita o arquivo de backup
+        exportarClientes()
         //Se não houver erro, aparece o status 200 e a mensagem.
         if(err == null){
             res.status(200).json("Usuario deletado com sucesso").end()
