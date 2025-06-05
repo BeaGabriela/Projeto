@@ -1,0 +1,50 @@
+[
+  {
+    "id_pizza": 1,
+    "nome": "Portuguesa",
+    "descricao": "Molho de tomate, muçarela, man",
+    "valor": 25
+  },
+  {
+    "id_pizza": 2,
+    "nome": "Margherita",
+    "descricao": "Molho de tomate, muçarela, man",
+    "valor": 22
+  },
+  {
+    "id_pizza": 3,
+    "nome": "Calabresa",
+    "descricao": "Molho de tomate, muçarela, cal",
+    "valor": 24
+  },
+  {
+    "id_pizza": 4,
+    "nome": "Quatro Queijos",
+    "descricao": "Molho de tomate, muçarela, par",
+    "valor": 26
+  },
+  {
+    "id_pizza": 5,
+    "nome": "Frango com Catupiry",
+    "descricao": "Molho de tomate, muçarela, fra",
+    "valor": 27
+  },
+  {
+    "id_pizza": 6,
+    "nome": "Vegetariana",
+    "descricao": "Molho de tomate, muçarela, tom",
+    "valor": 25
+  },
+  {
+    "id_pizza": 7,
+    "nome": "Bacon Supreme",
+    "descricao": "Molho de tomate, muçarela, bac",
+    "valor": 28
+  },
+  {
+    "id_pizza": 10,
+    "nome": "Frango com catupiry extra",
+    "descricao": "frango, molho de tomate, catup",
+    "valor": 45
+  }
+]
