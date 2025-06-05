@@ -2,7 +2,7 @@
 const funcionarios = require('../Models/Funcionarios.model.js')
 
 //Importando o arquivo do DAO, atraves de uma variavel
-const conexao = require('../dao/pizzaria.dao.js')
+const conexao = require('../Dao/pizzaria.dao.js')
 
 //Importando a varicel do bcrypt para codificar a senha
 const bcrypt = require('bcrypt')
@@ -15,6 +15,9 @@ const jwt = require("jsonwebtoken")
 
 //Criando a variavel que define quantas vezes a senha vai ser randorizda.
 const saltRounds = 10
+
+//Cria uma variavel que armazena a função do backup
+const { exportarFuncionarios } = require("../Utils/backup.js");
 
 //Criando função que retornara a leitura de todos os funcioarios
 const MostrarFuncionarios = (req, res) => {
@@ -119,6 +122,8 @@ const CriarFuncionario = async (req, res) => {
             if (err == null) {
                 //Status 201 significa que a requisição fo bem sucedida e um novo cliente foi criado no banco de dados.
                 res.status(201).json(result).end()
+                //Adicionando novo funcionario no banco de dados
+                exportarFuncionarios();
             } else {
                 console.error("Erro no banco", err)
                 res.status(400).json(result).end()
@@ -152,6 +157,8 @@ const AlterarDadosFuncionario = async (req, res) => {
     conexao.query(string, (err, result) => {
         // Se não houver erro, retorna um status 200, que significa 'ok' e o json
         if (err == null) {
+            //Editando o backup quando o funcioario sofrere uma alteração
+            exportarFuncionarios();
             res.status(200).json(result).end();
         } else {
             // Se houver erro, retorna o erro 400
@@ -168,6 +175,8 @@ const DeletarFuncionario = (req, res) => {
     conexao.query(string, (err, result) =>{
         //Se não houver erro, aparece o status 200 e a mensagem.
         if(err == null){
+            //Editando o backup depois de excluir um funcionario
+             exportarFuncionarios();
             res.status(200).json("Usuario deletado com sucesso").end()
         //Se houver erro, retorna o erro 400, que é erro de digitação/solicitação corrompiada e uma mensagem
         }else{
