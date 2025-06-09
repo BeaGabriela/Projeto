@@ -16,6 +16,9 @@ const pizzas = require('./src/Routes/Pizzas.routes.js')
 //Criando uma variavel que armazenara todo o meu arquivo funcionarios.routes, e com ele eu posso acessar as funções
 const funcionarios = require('./src/Routes/Funcionarios.routes.js')
 
+//Criando uma variavel que armazenara todo o meu arquivo pedidos.routes, e com ele eu posso acessar as funções
+const pedidos = require('./src/Routes/Pedidos.routes.js')
+
 //Criando a chamada de todos os mecanismos e dependencias a serem usada, inclusive a variavel setada para acessar o clientes.routes
 const app = express()
     .use(express.json())
@@ -23,6 +26,7 @@ const app = express()
     .use(clientes)
     .use(pizzas)
     .use(funcionarios)
+    .use(pedidos)
 
 
 //Chamando o app e atribuindo a ele a porta a ser executada,e  tambem um console log, que mostrara no console em qual porta o serviço está sendo executado.
