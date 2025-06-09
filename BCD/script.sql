@@ -68,8 +68,8 @@ IGNORE 1 ROWS;
 --Criando a tabela de pedidos.
 CREATE TABLE Pedidos(
     pedido_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    valor NUMERIC(4,2),
-    data_pedido DATE NOT NULL,
+    valor DECIMAL(4,2),
+    data_pedido DATETIME NOT NULL,
     
     cliente_id INTEGER NOT NULL,
 
@@ -77,12 +77,12 @@ CREATE TABLE Pedidos(
 );
 
 -- --Criando um arquivo para sempre que o banco de dados precisar ser criado novamente, terá alguns pedidos já agregados a tabela pedidos;
-LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Pizzaria/BCD/dados/pedidos.csv'
-INTO TABLE Pedidos
-FIELDS TERMINATED BY ';'
-ENCLOSED BY '"'
-LINES TERMINATED BY "\r\n"
-IGNORE 1 ROWS;
+-- LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Pizzaria/BCD/dados/pedidos.csv'
+-- INTO TABLE Pedidos
+-- FIELDS TERMINATED BY ';'
+-- ENCLOSED BY '"'
+-- LINES TERMINATED BY "\r\n"
+-- IGNORE 1 ROWS;
 
 
 --Criando a tabela de itens, que relaciona a pizza ao pedido feito
