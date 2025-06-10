@@ -87,10 +87,14 @@ CREATE TABLE Pedidos(
 
 --Criando a tabela de itens, que relaciona a pizza ao pedido feito
 CREATE TABLE item_pedido(
-    pedido_id INTEGER,
-    id_pizza INTEGER,
-    quantidade DECIMAL(4,2),
-    valor DECIMAL(4,2)
+    pedido_id INTEGER NOT NULL,
+    id_pizza INTEGER NOT NULL,
+    quantidade INTEGER,
+    modo_entrega BOOLEAN,
+
+    FOREIGN KEY (pedido_id) REFERENCES Pedidos(pedido_id),
+    FOREIGN KEY (id_pizza) REFERENCES Pizzas(id_pizza)
+
 );
 
 -- --Criando um arquivo para sempre que o banco de dados precisar ser criado novamente, terá alguns pedidos já agregados a tabela item_pedidos;
@@ -123,10 +127,26 @@ LINES TERMINATED BY "\r\n"
 IGNORE 1 ROWS;
 
 
---Criado uma tabela que mostra a pizza, a quantidade e o valor do item_pedido
-DROP IF EXISTS vw_pizza_ITEM_Pedido;
+--Criado uma tabela que mostra a pizza, o valor (qtd * valor) do item_pedido
+DROP VIEW IF EXISTS vw_pizza_ITEM_Pedido;
 CREATE View vw_pizza_ITEM_Pedido AS
-SELECT p.nome, i.quantidade, i.valor
+SELECT p.nome, i.quantidade, SUM(i.quantidade * p.valor) as Valor, i.pedido_id, i.modo_entrega
 FROM pizzas p INNER JOIN item_pedido i
 ON p.id_pizza = i.id_pizza;
+
+
+--Criando uma view que mostra o nome da pizza, o valor total
+DROP VIEW IF EXISTS vw_pedido_item;
+CREATE View vw_pedido_item AS
+SELECT vw.nome, vw.Valor, p.cliente_id, vw.modo_entrega
+FROM vw_pizza_ITEM_Pedido vw INNER JOIN pedidos p
+on vw.pedido_id = p.pedido_id;
+
+--Criando uma view que mostra a pizza, o valor, o nome do cliente e o teelfone e outras informações
+DROP VIEW IF EXISTS vw_pedido_cliente;
+CREATE View vw_pedido_cliente AS
+SELECT c.nome, c.telefone, c.cep, c.bairro, c.cidade, c.estado, c.referencia, c.numero, vw.nome as Pizza, vw.Valor, vw.modo_entrega
+FROM vw_pedido_item vw INNER JOIN Clientes c
+on vw.cliente_id = c.id_cliente;
+
 
