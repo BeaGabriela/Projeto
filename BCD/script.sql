@@ -92,8 +92,10 @@ CREATE TABLE item_pedido(
     quantidade INTEGER,
     modo_entrega BOOLEAN,
 
-    FOREIGN KEY (pedido_id) REFERENCES Pedidos(pedido_id),
+    FOREIGN KEY (pedido_id) REFERENCES Pedidos(pedido_id) ON DELETE CASCADE,
     FOREIGN KEY (id_pizza) REFERENCES Pizzas(id_pizza)
+
+
 
 );
 
@@ -143,9 +145,16 @@ FROM vw_pizza_ITEM_Pedido vw INNER JOIN pedidos p
 on vw.pedido_id = p.pedido_id;
 
 --Criando uma view que mostra a pizza, o valor, o nome do cliente e o teelfone e outras informações
-DROP VIEW IF EXISTS vw_pedido_cliente;
-CREATE View vw_pedido_cliente AS
-SELECT c.nome, c.telefone, c.cep, c.bairro, c.cidade, c.estado, c.referencia, c.numero, vw.nome as Pizza, vw.Valor, vw.modo_entrega
+DROP VIEW IF EXISTS vw_pedido_cliente_entrega;
+CREATE View vw_pedido_cliente_entrega AS
+SELECT c.id_cliente, c.nome, c.telefone, c.cep, c.bairro, c.cidade, c.estado, c.referencia, c.numero, vw.nome as Pizza, vw.Valor, vw.modo_entrega
+FROM vw_pedido_item vw INNER JOIN Clientes c
+on vw.cliente_id = c.id_cliente;
+
+--Criando uma view que mostra a pizza, o valor, o nome do cliente e o teelfone e outras informações
+DROP VIEW IF EXISTS vw_pedido_cliente_retirada;
+CREATE View vw_pedido_cliente_retirada AS
+SELECT c.id_cliente, c.nome, c.telefone, vw.nome as Pizza, vw.Valor, vw.modo_entrega
 FROM vw_pedido_item vw INNER JOIN Clientes c
 on vw.cliente_id = c.id_cliente;
 
