@@ -82,8 +82,89 @@ function exportarPizzas(){
 
 }
 
+function exportarPedidos(){
+   //Cria a linha que será rodada no banco de dados
+    const sql = "SELECT * FROM Pedidos"
+
+    //Criando a conxeão com o banco de dados, atraves da query e rodando com sql
+    conexao.query(sql, (err, results) =>{
+        //Criando uma condicional, caso der erro, mostra um amensagem e o erro.    
+        if(err){
+            console.error("Erro ao buscar Pedidos", err)
+            return
+        }
+        //Salva o resultado no arquivo.json    Formata o json com o resultado
+        fs.writeFile("dados/backup_pedidos.json", JSON.stringify(results, null, 2), (err) =>{
+            //Se apresentar erro, mostra a mensagem de erro
+            if(err){
+                console.error("Erro ao salvar o arquivo de backup de pedidos", err)
+            //Caso dê certo, a mensagem a aparecer será no console log, de sucesso. 
+            }else{
+                console.log("Backup criado com sucesso em backup_pedidos.json")
+            }
+
+        })
+    })
+
+}
+
+function exportarItem_Pedido(){
+   //Cria a linha que será rodada no banco de dados
+    const sql = "SELECT * FROM Item_pedido"
+
+    //Criando a conxeão com o banco de dados, atraves da query e rodando com sql
+    conexao.query(sql, (err, results) =>{
+        //Criando uma condicional, caso der erro, mostra um amensagem e o erro.    
+        if(err){
+            console.error("Erro ao buscar Itens", err)
+            return
+        }
+        //Salva o resultado no arquivo.json    Formata o json com o resultado
+        fs.writeFile("dados/backup_itens_pedidos.json", JSON.stringify(results, null, 2), (err) =>{
+            //Se apresentar erro, mostra a mensagem de erro
+            if(err){
+                console.error("Erro ao salvar o arquivo de backup de itens", err)
+            //Caso dê certo, a mensagem a aparecer será no console log, de sucesso. 
+            }else{
+                console.log("Backup criado com sucesso em backup_itens_pedidos.json")
+            }
+
+        })
+    })
+
+}
+function exportarImagem(){
+   //Cria a linha que será rodada no banco de dados
+    const sql = "SELECT * FROM Imagens"
+
+    //Criando a conxeão com o banco de dados, atraves da query e rodando com sql
+    conexao.query(sql, (err, results) =>{
+        //Criando uma condicional, caso der erro, mostra um amensagem e o erro.    
+        if(err){
+            console.error("Erro ao buscar imagens", err)
+            return
+        }
+        //Salva o resultado no arquivo.json    Formata o json com o resultado
+        fs.writeFile("dados/backup_imagens.json", JSON.stringify(results, null, 2), (err) =>{
+            //Se apresentar erro, mostra a mensagem de erro
+            if(err){
+                console.error("Erro ao salvar o arquivo de backup de imagens", err)
+            //Caso dê certo, a mensagem a aparecer será no console log, de sucesso. 
+            }else{
+                console.log("Backup criado com sucesso em backup_imagens.json")
+            }
+
+        })
+    })
+
+}
+
 module.exports={
      exportarFuncionarios,
      exportarClientes,
-     exportarPizzas
+     exportarPizzas,
+     exportarPedidos,
+     exportarItem_Pedido,
+     exportarImagem
+     
 }
