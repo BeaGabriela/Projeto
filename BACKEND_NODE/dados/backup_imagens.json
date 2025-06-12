@@ -1,0 +1,58 @@
+[
+  {
+    "id_imagem": 1,
+    "nome": "Portuguesa",
+    "caminho": "C:/Users/Undertaker/Desktop/Pizzaria/BCD/imagens/portuguesa.jpg",
+    "data_postada": "2025-05-12T03:00:00.000Z",
+    "id_pizza": 1
+  },
+  {
+    "id_imagem": 2,
+    "nome": "Marguerita",
+    "caminho": " C:/Users/Undertaker/Desktop/Pizzaria/BCD/imagens/margerita.jpg",
+    "data_postada": "2025-05-12T03:00:00.000Z",
+    "id_pizza": 2
+  },
+  {
+    "id_imagem": 3,
+    "nome": "Calabresa",
+    "caminho": "C:/Users/Undertaker/Desktop/Pizzaria/BCD/imagens/calabresa.jpg",
+    "data_postada": "2025-05-12T03:00:00.000Z",
+    "id_pizza": 3
+  },
+  {
+    "id_imagem": 4,
+    "nome": "Quatro Queijos",
+    "caminho": "C:/Users/Undertaker/Desktop/Pizzaria/BCD/imagens/quatroQueijos.jpg",
+    "data_postada": "2025-05-12T03:00:00.000Z",
+    "id_pizza": 4
+  },
+  {
+    "id_imagem": 5,
+    "nome": "Frango com Catupiry",
+    "caminho": " C:/Users/Undertaker/Desktop/Pizzaria/BCD/imagens/frango_Catupiry.jpg",
+    "data_postada": "2025-05-12T03:00:00.000Z",
+    "id_pizza": 5
+  },
+  {
+    "id_imagem": 6,
+    "nome": "Vegetariana",
+    "caminho": " C:/Users/Undertaker/Desktop/Pizzaria/BCD/imagens/vegetariana.jpg",
+    "data_postada": "2025-05-12T03:00:00.000Z",
+    "id_pizza": 6
+  },
+  {
+    "id_imagem": 7,
+    "nome": "Bacon Supremo",
+    "caminho": " C:/Users/Undertaker/Desktop/Pizzaria/BCD/imagens/baconSupremo.jpg",
+    "data_postada": "2025-05-12T03:00:00.000Z",
+    "id_pizza": 7
+  },
+  {
+    "id_imagem": 8,
+    "nome": "Margarita",
+    "caminho": "aaaaa",
+    "data_postada": "2025-06-12T17:38:35.000Z",
+    "id_pizza": 10
+  }
+]
