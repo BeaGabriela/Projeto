@@ -5,7 +5,7 @@ const item = require('../Models/item_pedido.model.js')
 const conexao = require('../Dao/pizzaria.dao.js')
 
 //Cria uma variavel que armazena a função do backup
-const { exportarItensPedidos } = require("../Utils/backup.js");
+const { exportarItem_Pedido } = require("../Utils/backup.js");
 
 //Criando função que retornara a leitura de todos os itens
 const MostrarItensPedidosEntrega = (req, res) => {
@@ -51,6 +51,7 @@ const CriarItemPedido = async (req, res) => {
         //Criado uma condicional para verificar se houve algum erro, caso não haja, a condicional exibira o resultado
         if (err == null) {
             //Cria e altera o backup
+            exportarItem_Pedido()
             //Status 201 significa que a requisição fo bem sucedida e um novo cliente foi criado no banco de dados.
             res.status(201).json(result).end()
         } else {
