@@ -117,7 +117,7 @@ CREATE TABLE Imagens(
 
     id_pizza INTEGER,
 
-    FOREIGN KEY (id_pizza) REFERENCES Pizzas(id_pizza) 
+    FOREIGN KEY (id_pizza) REFERENCES Pizzas(id_pizza) ON DELETE CASCADE
 );
 
 --Criando um arquivo para preeencher a tabela imagens sempre que o banco for reiniciado.
