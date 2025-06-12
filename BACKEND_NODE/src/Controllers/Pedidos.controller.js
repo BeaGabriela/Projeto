@@ -51,6 +51,7 @@ const CriarPedido = async (req, res) => {
         //Criado uma condicional para verificar se houve algum erro, caso não haja, a condicional exibira o resultado
         if (err == null) {
             //Cria e altera o backup
+            exportarPedidos()
             //Status 201 significa que a requisição fo bem sucedida e um novo cliente foi criado no banco de dados.
             res.status(201).json(result).end()
         } else {
@@ -69,6 +70,7 @@ const AlterarPedidos = async (req, res) => {
         //Caso não haja erro, o programa teve uma consulta bem-sucedida e alterou os dados
         if (err == null) {
             //Cria e altera o backup
+            exportarPedidos()
             //Com isso, o status 200 significa que foi bem sucedido.
             res.status(200).json(result, { result: "Dados alterados com sucesso" }).end()
         } else {
@@ -87,6 +89,7 @@ const CancelarPedido = (req, res) => {
         //Se não houver erro, aparece o status 200 e a mensagem.
         if (err == null) {
             //Cria e altera o backup
+            exportarPedidos()
             res.status(200).json("Pedido cancelado com sucesso").end()
             //Se houver erro, retorna o erro 400, que é erro de digitação/solicitação corrompiada e uma mensagem
         } else {
