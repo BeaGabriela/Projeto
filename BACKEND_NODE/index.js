@@ -1,5 +1,6 @@
 //Requeirindo o dotenv e configurando ele
 require('dotenv').config()
+
 //Criando uma variavel chamada PORT e atribuindo a ela o.env e o respectivo arquivo ou, caso haja problema com o docuemnto, a porta escolhida sera a 5000
 const PORT = process.env.PORT || 5000
 //Criando uma variavel para hospedar o express
@@ -25,6 +26,10 @@ const item = require('./src/Routes/Item_pedido.routes.js')
 //Criando uma variavel que armazenara todo o meu arquivo item_pedido.routes, e com ele eu posso acessar as funções
 const imagem = require('./src/Routes/Imagens.routes.js')
 
+const swaggerDocs = require('./swagger.js');  // Caminho da api que cria a documentação
+
+
+
 //Criando a chamada de todos os mecanismos e dependencias a serem usada, inclusive a variavel setada para acessar o clientes.routes
 const app = express()
     .use(express.json())
@@ -35,6 +40,8 @@ const app = express()
     .use(pedidos)
     .use(item)
     .use(imagem)
+
+    swaggerDocs(app);
 
 
 //Chamando o app e atribuindo a ele a porta a ser executada,e  tambem um console log, que mostrara no console em qual porta o serviço está sendo executado.
