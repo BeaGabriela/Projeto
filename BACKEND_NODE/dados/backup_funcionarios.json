@@ -1,37 +1,16 @@
 [
   {
     "id_funcionario": 1,
-    "nome": "Maria Carmelia",
-    "cpf": 659623652,
-    "senha": "$2b$10$DUJzqJOjgoyfpD9jmhC7Euf2sk8IJpiiWr5l0bMhcvWQoAGv.VNiK",
+    "nome": "Mariana",
+    "cpf": "12265425",
+    "senha": "OIA12",
     "cargo": "Gerente"
   },
   {
-    "id_funcionario": 3,
-    "nome": "Gabriela",
-    "cpf": 89754121,
-    "senha": "$2b$10$girEU0Q.XwEFELd1C9yQBuYEApnN4ibO/n6Otk9RewLqlE97HBT2e",
-    "cargo": "Auxiliar de cozinha"
-  },
-  {
-    "id_funcionario": 6,
-    "nome": "Juliana Paiva",
-    "cpf": 9841125,
-    "senha": "$2b$10$DKo0sowv1tpLlpW0HPE8nu3T4.LzDuOWzpHQ4yAcGQLsSR0jlx3zG",
-    "cargo": "Gerente"
-  },
-  {
-    "id_funcionario": 8,
-    "nome": "Mariana Paiva",
-    "cpf": 9658,
-    "senha": "$2b$10$MlbORSgEaWTtJbnG9ccYRuqR8ovoW5p6moSky1DWE0HLgeFhvOWzq",
-    "cargo": "Operadora"
-  },
-  {
-    "id_funcionario": 9,
+    "id_funcionario": 2,
     "nome": "Manéiva Paiva",
-    "cpf": 9954258,
-    "senha": "$2b$10$4Do9p/K790ziXawCb/9Y1OXID/HSmX8tt4rn.YrZRTOPxYHKOva82",
+    "cpf": "9954258",
+    "senha": "$2b$10$5vSJMn9XNarrmwA/l7neJueEEmFURm49EyZuol5EbfWOdXQNXLESi",
     "cargo": "Operadora"
   }
 ]
