@@ -6,45 +6,37 @@ USE Pizzaria; --Define o banco de dadoa a ser usado;
 CREATE TABLE Funcionarios(
     id_funcionario INTEGER PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(40) NOT NULL,
-    cpf INTEGER NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     cargo VARCHAR(30) NOT NULL
 );
 
---Criando um arquivo que sempre que o banco for reiniciado, a tabela FUNCIOANRIOS começa com alguns.
-LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Projeto/BCD/dados/funcionarios.csv'
-INTO TABLE Funcionarios
-FIELDS TERMINATED BY ';'
-ENCLOSED BY '"'
-LINES TERMINATED BY "\r\n"
-IGNORE 1 ROWS;
+CREATE INDEX idx_nome_funcionario ON Funcionarios(nome);
 
 --Criando a tabela de clientes;
-CREATE TABLE Clientes(
+CREATE TABLE Clientes (
     id_cliente INTEGER PRIMARY KEY AUTO_INCREMENT,
 
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
 
+    cpf VARCHAR(14) NOT NULL UNIQUE,
     nome VARCHAR(25) NOT NULL,
-    telefone VARCHAR(25) NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
     logradouro VARCHAR(30),
     numero INTEGER,
     complemento VARCHAR(30),
     bairro VARCHAR(30),
     cidade VARCHAR(30),
     estado VARCHAR(30),
-    cep INTEGER,
-    referencia VARCHAR(30)
+    cep VARCHAR(40),
+    referencia VARCHAR(30),
+
+    data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    preferencia_entrega VARCHAR(30)
 );
 
---Criando um arquivo que sempre que o banco for reiniciado, a tabela clientes começa com alguns clientes.
--- LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Pizzaria/BCD/dados/cliente.csv'
--- INTO TABLE Clientes
--- FIELDS TERMINATED BY ';'
--- ENCLOSED BY '"'
--- LINES TERMINATED BY "\r\n"
--- IGNORE 1 ROWS;
+CREATE INDEX idx_nome_cliente ON Clientes(nome);
 
 
 --Criando a tabela de pizzas.
@@ -68,21 +60,17 @@ IGNORE 1 ROWS;
 --Criando a tabela de pedidos.
 CREATE TABLE Pedidos(
     pedido_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    valor DECIMAL(4,2),
-    data_pedido DATETIME NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    data_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(20) DEFAULT 'Em Preparo',
+    data_conclusao DATETIME,  
+    forma_pagamento VARCHAR(50),
+    observacoes TEXT,
     
     cliente_id INTEGER NOT NULL,
 
     FOREIGN KEY (cliente_id) REFERENCES Clientes(id_cliente)
 );
-
--- --Criando um arquivo para sempre que o banco de dados precisar ser criado novamente, terá alguns pedidos já agregados a tabela pedidos;
--- LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Pizzaria/BCD/dados/pedidos.csv'
--- INTO TABLE Pedidos
--- FIELDS TERMINATED BY ';'
--- ENCLOSED BY '"'
--- LINES TERMINATED BY "\r\n"
--- IGNORE 1 ROWS;
 
 
 --Criando a tabela de itens, que relaciona a pizza ao pedido feito
@@ -90,12 +78,10 @@ CREATE TABLE item_pedido(
     pedido_id INTEGER NOT NULL,
     id_pizza INTEGER NOT NULL,
     quantidade INTEGER,
-    modo_entrega BOOLEAN,
+    modo_entrega ENUM('Entrega', 'Retirada') NOT NULL,
 
     FOREIGN KEY (pedido_id) REFERENCES Pedidos(pedido_id) ON DELETE CASCADE,
     FOREIGN KEY (id_pizza) REFERENCES Pizzas(id_pizza)
-
-
 
 );
 
@@ -106,6 +92,19 @@ FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 LINES TERMINATED BY "\r\n"
 IGNORE 1 ROWS;
+
+
+CREATE TABLE historico_status_pedido (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    status_anterior VARCHAR(50),
+    status_novo VARCHAR(50),
+    data_alteracao DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    pedido_id INT,
+
+   FOREIGN KEY (pedido_id) REFERENCES Pedidos(pedido_id) ON DELETE CASCADE
+
+);
 
 
 --Criando uma tabela para armazenar imagens localmente, ou melhor, o caminho da imagem. 
@@ -132,9 +131,10 @@ IGNORE 1 ROWS;
 --Criado uma tabela que mostra a pizza, o valor (qtd * valor) do item_pedido
 DROP VIEW IF EXISTS vw_pizza_ITEM_Pedido;
 CREATE View vw_pizza_ITEM_Pedido AS
-SELECT p.nome, i.quantidade, SUM(i.quantidade * p.valor) as Valor, i.pedido_id, i.modo_entrega
-FROM pizzas p INNER JOIN item_pedido i
-ON p.id_pizza = i.id_pizza;
+SELECT p.nome, SUM(i.quantidade) as total_quantidade, SUM(i.quantidade * p.valor) as Valor_Total, i.pedido_id, i.modo_entrega
+FROM pizzas p INNER JOIN item_pedido i ON p.id_pizza = i.id_pizza
+GROUP BY p.nome, i.pedido_id, i.modo_entrega;
+
 
 
 --Criando uma view que mostra o nome da pizza, o valor total
