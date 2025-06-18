@@ -61,10 +61,28 @@ const CriarPedido = async (req, res) => {
     })
 }
 
-// Criada uma função para alterar os pedidos
-const AlterarPedidos = async (req, res) => {
+// Criada uma função para alterar o status do pedido
+const AlterarStatusPedidos = async (req, res) => {
     //Atribuindo a variavel string a função alterar
-    let string = pedidos.AlterarPedidos(req.body)
+    let string = pedidos.AlterarStatusPedido(req.body)
+    //executa uma consulta no banco de dados, que esta no return do 'lerTodos()', e em seguida passa dois paramentros, um de erro e outro de resultado
+    conexao.query(string, (err, result) => {
+        //Caso não haja erro, o programa teve uma consulta bem-sucedida e alterou os dados
+        if (err == null) {
+            //Cria e altera o backup
+            exportarPedidos()
+            //Com isso, o status 200 significa que foi bem sucedido.
+            res.status(200).json(result, { result: "Dados alterados com sucesso" }).end()
+        } else {
+            //Caso contrario, aparecera o status 400 que indica que a requisição enviada esta incorreta ou malformada. 
+            res.status(400).end()
+        }
+    })
+}
+
+const AlterarDataConclusaoPedido = async (req, res) => {
+    //Atribuindo a variavel string a função alterar
+    let string = pedidos.AlterarDataConclusaoPedido(req.body)
     //executa uma consulta no banco de dados, que esta no return do 'lerTodos()', e em seguida passa dois paramentros, um de erro e outro de resultado
     conexao.query(string, (err, result) => {
         //Caso não haja erro, o programa teve uma consulta bem-sucedida e alterou os dados
@@ -104,6 +122,7 @@ module.exports = {
     MostrarPedidos,
     MonstrarPedidoFiltradaIDCliente,
     CriarPedido,
-    AlterarPedidos,
-    CancelarPedido
+    AlterarStatusPedidos,
+    CancelarPedido,
+    AlterarDataConclusaoPedido
 }
