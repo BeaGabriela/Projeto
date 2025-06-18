@@ -10,18 +10,25 @@ const MonstrarPedidoFiltradaIDCliente = (model) =>{
 
 //Função que adiciona ao banco de dados novos pedidos
 const CriarPedido = (model) =>{
-    return `INSERT INTO Pedidos VALUES(default, '${model.valor}', now(), ${model.cliente_id})`
+    return `INSERT INTO Pedidos VALUES(default, '${model.valor}', now(), '${model.status}',  ${model.data_conclusao}, '${model.forma_pagamento}',"${model.observacoes}")`
 }
 
-//Criando uma funçãp para que seja possivel alterar os dados dos pedidos criados
-const AlterarPedidos = (model) => {
-    //Cria um vetor que coloca apenas os atribuitos a serem alterados, permitindno que altere apenas um elemento
-    let updates =  []
-    //Criado varias condicioanis para verificar se aquele atrbuto vai ser ou nao modificado.
-    if(model.valor) updates.push(`valor = '${model.valor}'`)
-    if(model.data_pedido) updates.push(`data_pedido = now()`)
-    if(model.cliente_id) updates.push(`cliente_id = ${model.cliente_id}`)
-    //caso seja, ele alterara apenas o atributo desejado.
+//Criando uma funçãp para que seja possivel alterar o status dos pedidos criados
+const AlterarStatusPedido = (model) => {
+    let updates = [];
+
+    if(model.status) updates.push(`status = '${model.status}'`);
+
+    return `UPDATE Pedidos SET ${updates.join(', ')} WHERE pedido_id = ${model.pedido_id};`;
+}
+
+//Criando uma funçãp para que seja possivel alterar a data dos pedidos criados
+const AlterarDataConclusaoPedido = (model) => {
+    let updates = [];
+
+    // Sempre que chamar, define a data de conclusão como o momento atual
+    updates.push(`data_conclusao = NOW()`);
+
     return `UPDATE Pedidos SET ${updates.join(', ')} WHERE pedido_id = ${model.pedido_id};`;
 }
 
@@ -38,6 +45,7 @@ module.exports = {
     MostrarPedidos,
     MonstrarPedidoFiltradaIDCliente,
     CriarPedido,
-    AlterarPedidos,
+    AlterarStatusPedido,
+    AlterarDataConclusaoPedido,
     CancelarPedido
 }

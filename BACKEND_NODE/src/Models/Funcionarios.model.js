@@ -16,7 +16,7 @@ const Logar = () => {
 
 //Função que adiciona ao banco de dados novos funcionarios
 const NovoFuncionario = (model) =>{
-    return `INSERT INTO Funcionarios VALUES(default, '${model.nome}', ${model.cpf}, '${model.senha}', '${model.cargo}')`
+    return `INSERT INTO Funcionarios VALUES(default, '${model.nome}', '${model.cpf}', '${model.senha}', '${model.cargo}')`
 }
 
 //Criando uma funçãp para que seja possivel alterar os dados dos funcioarios criados.
@@ -25,7 +25,7 @@ const AlterarDadosFuncionario = (model) => {
     let updates =  []
     //Criado varias condicioanis para verificar se aquele atrbuto vai ser ou nao modificado.
     if(model.nome) updates.push(`nome = '${model.nome}'`)
-    if(model.cpf) updates.push(`cpf = ${model.cpf}`)
+    if(model.cpf) updates.push(`cpf = '${model.cpf}'`)
     if(model.senha) updates.push(`senha = '${model.senha}'`)
     if(model.cargo) updates.push(`cargo = '${model.cargo}'`)
     //caso seja, ele alterara apenas o atributo desejado.
