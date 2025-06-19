@@ -1,8 +1,10 @@
-DROP DATABASE IF EXISTS Pizzaria; --Apaga um banco de dados existente com o mesmo nome.
-CREATE DATABASE Pizzaria charset=UTF8 collate utf8_general_ci; --Cria um banco de dados do nome pizzaria e passa a confuguração UTP8
-USE Pizzaria; --Define o banco de dadoa a ser usado;
+DROP DATABASE IF EXISTS Pizzaria;
+CREATE DATABASE Pizzaria charset=UTF8 collate utf8_general_ci;
+USE Pizzaria;
 
---Criando um atabela de funcioarios para definir quais funcionarios podem editar e acrescentar novas pizzas na tabela
+-- =====================
+-- Tabela Funcionarios
+-- =====================
 CREATE TABLE Funcionarios(
     id_funcionario INTEGER PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(40) NOT NULL,
@@ -13,13 +15,15 @@ CREATE TABLE Funcionarios(
 
 CREATE INDEX idx_nome_funcionario ON Funcionarios(nome);
 
---Criando a tabela de clientes;
+
+
+-- =====================
+-- Tabela Clientes
+-- =====================
 CREATE TABLE Clientes (
     id_cliente INTEGER PRIMARY KEY AUTO_INCREMENT,
-
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
-
     cpf VARCHAR(14) NOT NULL UNIQUE,
     nome VARCHAR(25) NOT NULL,
     telefone VARCHAR(20) NOT NULL,
@@ -31,7 +35,6 @@ CREATE TABLE Clientes (
     estado VARCHAR(30),
     cep VARCHAR(40),
     referencia VARCHAR(30),
-
     data_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     preferencia_entrega VARCHAR(30)
 );
@@ -39,7 +42,9 @@ CREATE TABLE Clientes (
 CREATE INDEX idx_nome_cliente ON Clientes(nome);
 
 
---Criando a tabela de pizzas.
+-- =====================
+-- Tabela Pizzas
+-- =====================
 CREATE TABLE Pizzas(
     id_pizza INTEGER PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(30),
@@ -56,24 +61,26 @@ LINES TERMINATED BY "\r\n"
 IGNORE 1 ROWS;
 
 
-
---Criando a tabela de pedidos.
+-- =====================
+-- Tabela Pedidos
+-- =====================
 CREATE TABLE Pedidos(
     pedido_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     valor DECIMAL(10,2) NOT NULL,
-    data_pedido DATETIME DEFAULT CURRENT_TIMESTAMP,
-    status VARCHAR(20) DEFAULT 'Em Preparo',
-    data_conclusao DATETIME,  
-    forma_pagamento VARCHAR(50),
+    data_pedido DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    status ENUM('Em Preparo', 'Pronto', 'Finalizado', 'Cancelado') DEFAULT 'Em Preparo' NOT NULL,
+    data_conclusao DATETIME,
+    forma_pagamento VARCHAR(50) NOT NULL,
     observacoes TEXT,
-    
-    cliente_id INTEGER NOT NULL,
+    nomeCliente VARCHAR(40),
+    cliente_id INTEGER,
 
-    FOREIGN KEY (cliente_id) REFERENCES Clientes(id_cliente)
+    FOREIGN KEY (cliente_id) REFERENCES Clientes(id_cliente) ON DELETE CASCADE
 );
 
-
---Criando a tabela de itens, que relaciona a pizza ao pedido feito
+-- =====================
+-- Tabela item_pedido
+-- =====================
 CREATE TABLE item_pedido(
     pedido_id INTEGER NOT NULL,
     id_pizza INTEGER NOT NULL,
@@ -82,80 +89,81 @@ CREATE TABLE item_pedido(
 
     FOREIGN KEY (pedido_id) REFERENCES Pedidos(pedido_id) ON DELETE CASCADE,
     FOREIGN KEY (id_pizza) REFERENCES Pizzas(id_pizza)
-
 );
 
--- --Criando um arquivo para sempre que o banco de dados precisar ser criado novamente, terá alguns pedidos já agregados a tabela item_pedidos;
-LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Pizzaria/BCD/dados/item_pedido.csv'
-INTO TABLE item_pedido
-FIELDS TERMINATED BY ';'
-ENCLOSED BY '"'
-LINES TERMINATED BY "\r\n"
-IGNORE 1 ROWS;
-
-
+-- =====================
+-- Histórico de Status
+-- =====================
 CREATE TABLE historico_status_pedido (
     id INT AUTO_INCREMENT PRIMARY KEY,
     status_anterior VARCHAR(50),
     status_novo VARCHAR(50),
     data_alteracao DATETIME DEFAULT CURRENT_TIMESTAMP,
-
     pedido_id INT,
-
-   FOREIGN KEY (pedido_id) REFERENCES Pedidos(pedido_id) ON DELETE CASCADE
-
+    FOREIGN KEY (pedido_id) REFERENCES Pedidos(pedido_id) ON DELETE CASCADE
 );
 
-
---Criando uma tabela para armazenar imagens localmente, ou melhor, o caminho da imagem. 
+-- =====================
+-- Tabela Imagens
+-- =====================
 CREATE TABLE Imagens(
     id_imagem INTEGER AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255),
     caminho VARCHAR(500),
     data_postada DATETIME DEFAULT CURRENT_TIMESTAMP,
-
     id_pizza INTEGER,
-
     FOREIGN KEY (id_pizza) REFERENCES Pizzas(id_pizza) ON DELETE CASCADE
 );
 
---Criando um arquivo para preeencher a tabela imagens sempre que o banco for reiniciado.
-LOAD DATA INFILE 'C:/Users/Undertaker/Desktop/Pizzaria/BCD/dados/imagens.csv'
-INTO TABLE Imagens
-FIELDS TERMINATED BY ';'
-ENCLOSED BY '"'
-LINES TERMINATED BY "\r\n"
-IGNORE 1 ROWS;
+-- =====================
+-- Gatilho: Atualizar data_conclusao quando status virar "Finalizado"
+-- =====================
+DELIMITER //
+CREATE TRIGGER atualiza_data_conclusao
+BEFORE UPDATE ON Pedidos
+FOR EACH ROW
+BEGIN
+    IF NEW.status = 'Finalizado' AND OLD.status <> 'Finalizado' AND NEW.data_conclusao IS NULL THEN
+        SET NEW.data_conclusao = NOW();
+    END IF;
+END;
+//
+DELIMITER ;
 
 
---Criado uma tabela que mostra a pizza, o valor (qtd * valor) do item_pedido
+-- =====================
+-- Views
+-- =====================
+
+-- 1. View: Total de itens por pedido
 DROP VIEW IF EXISTS vw_pizza_ITEM_Pedido;
-CREATE View vw_pizza_ITEM_Pedido AS
-SELECT p.nome, SUM(i.quantidade) as total_quantidade, SUM(i.quantidade * p.valor) as Valor_Total, i.pedido_id, i.modo_entrega
-FROM pizzas p INNER JOIN item_pedido i ON p.id_pizza = i.id_pizza
+CREATE VIEW vw_pizza_ITEM_Pedido AS
+SELECT p.nome AS nome_pizza, SUM(i.quantidade) AS total_quantidade, SUM(i.quantidade * p.valor) AS Valor_Total, i.pedido_id, i.modo_entrega
+FROM Pizzas p INNER JOIN item_pedido i ON p.id_pizza = i.id_pizza
 GROUP BY p.nome, i.pedido_id, i.modo_entrega;
 
+-- 2. View: Pedido + Cliente
+DROP VIEW IF EXISTS vw_pedido_cliente;
+CREATE VIEW vw_pedido_cliente AS
+SELECT p.pedido_id, p.status, p.data_pedido, p.data_conclusao, c.nome AS cliente_nome, c.telefone
+FROM Pedidos p INNER JOIN Clientes c ON p.cliente_id = c.id_cliente;
 
+-- 3. View: Histórico de status por pedido
+DROP VIEW IF EXISTS vw_historico_status;
+CREATE VIEW vw_historico_status AS
+SELECT h.pedido_id, h.status_anterior, h.status_novo, h.data_alteracao
+FROM historico_status_pedido h;
 
---Criando uma view que mostra o nome da pizza, o valor total
-DROP VIEW IF EXISTS vw_pedido_item;
-CREATE View vw_pedido_item AS
-SELECT vw.nome, vw.Valor, p.cliente_id, vw.modo_entrega
-FROM vw_pizza_ITEM_Pedido vw INNER JOIN pedidos p
-on vw.pedido_id = p.pedido_id;
+-- 4. View: Listagem rápida de pizzas
+DROP VIEW IF EXISTS vw_listagem_pizzas;
+CREATE VIEW vw_listagem_pizzas AS
+SELECT id_pizza, nome, descricao, valor
+FROM Pizzas;
 
---Criando uma view que mostra a pizza, o valor, o nome do cliente e o teelfone e outras informações
-DROP VIEW IF EXISTS vw_pedido_cliente_entrega;
-CREATE View vw_pedido_cliente_entrega AS
-SELECT c.id_cliente, c.nome, c.telefone, c.cep, c.bairro, c.cidade, c.estado, c.referencia, c.numero, vw.nome as Pizza, vw.Valor, vw.modo_entrega
-FROM vw_pedido_item vw INNER JOIN Clientes c
-on vw.cliente_id = c.id_cliente;
-
---Criando uma view que mostra a pizza, o valor, o nome do cliente e o teelfone e outras informações
-DROP VIEW IF EXISTS vw_pedido_cliente_retirada;
-CREATE View vw_pedido_cliente_retirada AS
-SELECT c.id_cliente, c.nome, c.telefone, vw.nome as Pizza, vw.Valor, vw.modo_entrega
-FROM vw_pedido_item vw INNER JOIN Clientes c
-on vw.cliente_id = c.id_cliente;
-
+-- 5. View: Pedidos em Aberto
+DROP VIEW IF EXISTS vw_pedidos_em_preparo;
+CREATE VIEW vw_pedidos_em_preparo AS
+SELECT pedido_id, status, data_pedido, cliente_id
+FROM Pedidos
+WHERE status != 'Finalizado';
 
