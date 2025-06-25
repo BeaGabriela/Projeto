@@ -46,7 +46,7 @@ const Middle = require('../Middleware/Middleware');
 router.get("/pedidos", pedidos.MostrarPedidos)
 
 //Definindo o corpo da URL para puxar pedidos filtrados pelo id do cliente
-router.get("/pedidos", pedidos.MonstrarPedidoFiltradaIDCliente)
+router.get("/pedidos/", pedidos.MonstrarPedidoFiltradaIDCliente)
 
 
 /** Criando a documentação da rota de criar os pedidos
@@ -84,6 +84,9 @@ router.get("/pedidos", pedidos.MonstrarPedidoFiltradaIDCliente)
 router.post("/pedido", Middle.Autenticar, pedidos.CriarPedido)
 
 
+router.post("/pedidoLocal", pedidos.CriarPedidoLocal)
+
+
 /** Criando a documentação da rota de alterar os pedidos
  *@swagger
  * /pedidos:
@@ -116,7 +119,7 @@ router.post("/pedido", Middle.Autenticar, pedidos.CriarPedido)
  * 
  */
 //Definindo o corpo da URL para alterar o status dos pedidos
-router.put("/pedido/alterar/status", Middle.Autenticar, pedidos.AlterarStatusPedidos)
+router.put("/pedido/alterar/status", pedidos.AlterarStatusPedidos)
 
 //Definindo o corpo da URL para alterar data do pdido
 router.put("/pedido/alterar/data_conclusao", Middle.Autenticar, pedidos.AlterarDataConclusaoPedido)
