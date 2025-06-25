@@ -61,6 +61,26 @@ const CriarPedido = async (req, res) => {
     })
 }
 
+//Criando uma variavel que cria um novo pedido local
+const CriarPedidoLocal = async (req, res) => {
+    //Criada a variavel que hospeda a função que ira ser usada
+    let string = pedidos.CriarPedidoLocal(req.body)
+
+    //Criado a conexão com o banco de dados
+    conexao.query(string, (err, result) => {
+        //Criado uma condicional para verificar se houve algum erro, caso não haja, a condicional exibira o resultado
+        if (err == null) {
+            //Cria e altera o backup
+            exportarPedidos()
+            //Status 201 significa que a requisição fo bem sucedida e um novo cliente foi criado no banco de dados.
+            res.status(201).json(result).end()
+        } else {
+            console.error("Erro no banco", err)
+            res.status(400).json(result).end()
+        }
+    })
+}
+
 // Criada uma função para alterar o status do pedido
 const AlterarStatusPedidos = async (req, res) => {
     //Atribuindo a variavel string a função alterar
@@ -122,6 +142,7 @@ module.exports = {
     MostrarPedidos,
     MonstrarPedidoFiltradaIDCliente,
     CriarPedido,
+    CriarPedidoLocal,
     AlterarStatusPedidos,
     CancelarPedido,
     AlterarDataConclusaoPedido
