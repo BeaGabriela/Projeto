@@ -23,8 +23,11 @@ const pedidos = require('./src/Routes/Pedidos.routes.js')
 //Criando uma variavel que armazenara todo o meu arquivo item_pedido.routes, e com ele eu posso acessar as funções
 const item = require('./src/Routes/Item_pedido.routes.js')
 
-//Criando uma variavel que armazenara todo o meu arquivo item_pedido.routes, e com ele eu posso acessar as funções
+//Criando uma variavel que armazenara todo o meu arquivo imagem.routes, e com ele eu posso acessar as funções
 const imagem = require('./src/Routes/Imagens.routes.js')
+
+//Criando uma variavel que armazenara todo o meu arquivo Historico_status.routes, e com ele eu posso acessar as funções
+const status = require('./src/Routes/Historico_status.routes.js')
 
 const swaggerDocs = require('./swagger.js');  // Caminho da api que cria a documentação
 
@@ -40,6 +43,7 @@ const app = express()
     .use(pedidos)
     .use(item)
     .use(imagem)
+    .use(status)
 
     swaggerDocs(app);
 
