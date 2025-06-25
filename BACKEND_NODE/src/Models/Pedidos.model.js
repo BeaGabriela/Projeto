@@ -8,10 +8,21 @@ const MonstrarPedidoFiltradaIDCliente = (model) =>{
     return `SELECT * FROM Pedidos WHERE cliente_id = ${model.cliente_id}`
 }
 
-//Função que adiciona ao banco de dados novos pedidos
-const CriarPedido = (model) =>{
-    return `INSERT INTO Pedidos VALUES(default, '${model.valor}', now(), '${model.status}',  ${model.data_conclusao}, '${model.forma_pagamento}',"${model.observacoes}")`
+//Função que adiciona ao banco de dados novos pedidos feito através de dispositivo movel
+const CriarPedido = (model) => {
+    const dataConclusao = model.data_conclusao ? `'${model.data_conclusao}'` : 'NULL';
+
+    return `INSERT INTO Pedidos (valor, data_pedido, status, data_conclusao, forma_pagamento, observacoes, cliente_id) 
+            VALUES (${model.valor}, NOW(), '${model.status}', ${dataConclusao}, '${model.forma_pagamento}', '${model.observacoes}', ${model.cliente_id})`;
 }
+
+
+//Função que adiciona ao banco de dados novos pedidos feito no local
+const CriarPedidoLocal = (model) => {
+    return `INSERT INTO Pedidos (valor, data_pedido, status, data_conclusao, forma_pagamento, observacoes, nomeCliente) 
+            VALUES (${model.valor}, NOW(), '${model.status}', NULL, '${model.forma_pagamento}', '${model.observacoes}', '${model.nomeCliente}')`;
+}
+
 
 //Criando uma funçãp para que seja possivel alterar o status dos pedidos criados
 const AlterarStatusPedido = (model) => {
@@ -45,6 +56,7 @@ module.exports = {
     MostrarPedidos,
     MonstrarPedidoFiltradaIDCliente,
     CriarPedido,
+    CriarPedidoLocal,
     AlterarStatusPedido,
     AlterarDataConclusaoPedido,
     CancelarPedido
