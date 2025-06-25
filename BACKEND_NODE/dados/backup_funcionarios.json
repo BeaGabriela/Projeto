@@ -1,16 +1,16 @@
 [
   {
     "id_funcionario": 1,
-    "nome": "Mariana",
-    "cpf": "12265425",
-    "senha": "OIA12",
+    "nome": "Manéiva Paiva",
+    "cpf": "9954258",
+    "senha": "$2b$10$Plya2cM4H27PAHfMYgw3veCPJv6aa9UvEWrq0oeju06UEag2N1LwG",
     "cargo": "Gerente"
   },
   {
     "id_funcionario": 2,
-    "nome": "Manéiva Paiva",
-    "cpf": "9954258",
-    "senha": "$2b$10$5vSJMn9XNarrmwA/l7neJueEEmFURm49EyZuol5EbfWOdXQNXLESi",
-    "cargo": "Operadora"
+    "nome": "Grace Marina",
+    "cpf": "12345",
+    "senha": "$2b$10$L0ZtvClx.BpB.TRYjyBFDu27ftka3uPqZtyW/rhaez2XAiA5nhCxu",
+    "cargo": "Auxiliar"
   }
 ]

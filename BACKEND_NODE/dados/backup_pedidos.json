@@ -1,8 +1,13 @@
 [
   {
-    "pedido_id": 3,
-    "valor": 50,
-    "data_pedido": "2025-06-12T17:27:20.000Z",
-    "cliente_id": 3
+    "pedido_id": 2,
+    "valor": 40,
+    "data_pedido": "2025-06-25T16:45:55.000Z",
+    "status": "Finalizando",
+    "data_conclusao": null,
+    "forma_pagamento": "Pix",
+    "observacoes": "Katchup extra",
+    "nomeCliente": null,
+    "cliente_id": 2
   }
 ]
