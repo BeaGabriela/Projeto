@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Pizzaria</title>
+    <link rel="stylesheet" href="../Estilo/Principal_login.css">
+</head>
+
+<body>
+    <div class="cheese-wave" id="cheeseWave">
+        <svg class="cheese-drip" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#f9d423" d="M0,192 C360,288 1080,96 1440,192 L1440,0 L0,0 Z" />
+        </svg>
+    </div>
+
+
+    <!-- Criando o main ara agregar toda a estrutura principal -->
+    <main>
+        <!-- Adcionado a imagem e em seguida o noem da pizzaria -->
+        <img src="../Imagens/pizza.png" />
+        <h1>Golden Pizzaria</h1>
+        <!-- Criando uma div que armazena os inputs -->
+        <div>
+            <input type="text" placeholder="Email" />
+            <input type="text" placeholder="Senha" />
+            <div>
+                <button onclick='Entrar()'>
+                    <p>Entrar</p>
+                </button>
+            </div>
+        </div>
+
+    </main>
+    <!-- O nav agrega os seguintes conteudos -->
+    <nav>
+        <p>Esqueceu a senha?</p>
+        <h3>Novo Usuário</h3>
+    </nav>
+    <script src="../Javascript/Principal_login.js"></script>
+</body>
+
+</html>
