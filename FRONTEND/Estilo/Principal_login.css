@@ -1,0 +1,128 @@
+/* Tirando qualquer tipo de definição de margin interna ou externa */
+*{
+    margin:0;
+    padding:0;
+}
+
+/* Definindo uma cor e a centralização do body inicial */
+body{
+    background-color: #e52020;
+    text-align:center;
+}
+
+
+
+.cheese-wave {
+  position: fixed;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #f9d423, #f5b700);
+  box-shadow: inset 0 20px 40px rgba(255, 214, 79, 0.6);
+  transition: top 1.5s ease-in-out;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+
+}
+
+.cheese-wave.active {
+  top: 0;
+}
+
+.cheese-drip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+}
+
+
+
+
+
+
+/* Setando a imagem */
+img{
+    height: 28vh;
+}
+
+/* Setnado o h1 */
+h1{
+    margin-bottom: 8vh;
+    color: #f9cb43;
+    font-weight: 800;
+}
+
+/* Definindo o main */
+main{
+    margin-top: 8vh;
+}
+
+/* Definindo as propriedades da div dos inoputs */
+main > div {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+/* Definindo propriedades dos dois inputs */
+input{
+    width: 60vw;
+    height: 6vh;
+    border-radius: 12px;
+    background-color: #f9cb43;
+    border:none;
+    box-shadow: 1px 1px 1px  #000;
+    margin-bottom: 3vh;
+}
+
+/* Definindo as caracteristicas das palavras que estão dentro dos inputs */
+input::placeholder{
+    color:#000;
+    font-size: 12pt;
+    padding-left: 10px;
+    font-weight: 700;
+}
+
+/* Definndo caracteristica do botao */
+button{
+     width: 52vw;
+    height: 6vh;
+    border-radius: 12px;
+    background-color: #fba518;;
+    border:none;
+    box-shadow: 1px 1px 1px  #000;
+    margin-bottom: 3vh;
+}
+
+/* Definindo caracteristica do p dentro do botão */
+button > p{
+    color: #e52020;
+    font-size: 12pt;
+    padding-left: 10px;
+    font-weight: 800;
+}
+
+nav{
+    margin-top: 1vh;
+    display: flex;
+    flex-direction:column;
+}
+
+nav>p{
+    color: #000;
+    font-size: 13pt;
+    font-weight: 700;
+}
+
+h3{
+    margin-top: 3vh;
+    color: #000;
+    font-size: 13pt;
+    font-weight: 700;
+
+}
