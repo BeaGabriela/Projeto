@@ -6,3 +6,10 @@ function Entrar(){
     wave.classList.remove('active');
   }, 3000);
 };
+
+
+function fecharModalEsqueceuSenha(){
+  var modalEsqueceuSenha = document.querySelector('.EsqueceuSenha')
+
+  modalEsqueceuSenha.classList.add('modal')
+}
