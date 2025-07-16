@@ -15,7 +15,6 @@
         </svg>
     </div>
 
-
     <!-- Criando o main ara agregar toda a estrutura principal -->
     <main>
         <!-- Adcionado a imagem e em seguida o noem da pizzaria -->
@@ -23,8 +22,8 @@
         <h1>Golden Pizzaria</h1>
         <!-- Criando uma div que armazena os inputs -->
         <div>
-            <input type="text" placeholder="Email" />
-            <input type="text" placeholder="Senha" />
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Senha" required />
             <div>
                 <button onclick='Entrar()'>
                     <p>Entrar</p>
@@ -38,6 +37,24 @@
         <p>Esqueceu a senha?</p>
         <h3>Novo Usuário</h3>
     </nav>
+
+
+
+    <!-- Modal de esqueceu a senha -->
+    <div class="EsqueceuSenha">
+        <div id="EsqueceuSenhaQuadro">
+            <p onclick="fecharModalEsqueceuSenha()">X</p>
+            <div>
+                <img id="garota_pc" src="../Imagens/garota_pc.png"/>
+                <nav id="redefinicaoSenha">
+                    <p>Digite seu email para redefinição de senha:</p>
+                    <input type="email" placeholder='Email' required />
+                </nav>
+                <button>Enviar</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../Javascript/Principal_login.js"></script>
 </body>
 
