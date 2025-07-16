@@ -12,6 +12,7 @@ body{
 
 
 
+/* Colocando uma parede que simula queijo derretido */
 .cheese-wave {
   position: fixed;
   top: -100%;
@@ -41,11 +42,8 @@ body{
 
 
 
-
-
-
 /* Setando a imagem */
-img{
+main> img{
     height: 28vh;
 }
 
@@ -69,7 +67,7 @@ main > div {
     
 }
 
-/* Definindo propriedades dos dois inputs */
+/* Definindo propriedades dos dois inputs principas */
 input{
     width: 60vw;
     height: 6vh;
@@ -78,6 +76,8 @@ input{
     border:none;
     box-shadow: 1px 1px 1px  #000;
     margin-bottom: 3vh;
+    font-size: 12pt;
+    padding-left: 12px;
 }
 
 /* Definindo as caracteristicas das palavras que estão dentro dos inputs */
@@ -99,7 +99,7 @@ button{
     margin-bottom: 3vh;
 }
 
-/* Definindo caracteristica do p dentro do botão */
+/* Definindo caracteristica do p dentro do botão de entrar */
 button > p{
     color: #e52020;
     font-size: 12pt;
@@ -107,22 +107,87 @@ button > p{
     font-weight: 800;
 }
 
+/* Editando as caracteristicas de local do esqueceu a senha e novo usuaio */
 nav{
     margin-top: 1vh;
     display: flex;
     flex-direction:column;
 }
 
+/* Editando o esqueceu a senha */
 nav>p{
     color: #000;
     font-size: 13pt;
     font-weight: 700;
 }
 
+/* Editadno o novo usuario */
 h3{
     margin-top: 3vh;
     color: #000;
     font-size: 13pt;
     font-weight: 700;
 
+}
+
+/* adicionando um modal que sobrepnha toda a tela */
+.EsqueceuSenha{
+    position:absolute;
+    top:0;
+    left:0;
+    background-color: #f9cb43d7;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* definindo o modal como 'invisivel' */
+.modal{
+    display: none;
+    visibility: hidden;
+}
+
+/* Criando o quadro onde terá as informações */
+#EsqueceuSenhaQuadro{
+     background-color: #f9cb43;
+     width: 90vw;
+     height:80vh;
+     margin-top: 10vh;
+     margin-left: 5vw;
+        border-radius:20px;
+}
+
+/* Definindo o p, o texto */
+#EsqueceuSenhaQuadro > p{
+    margin-left:76vw;
+    padding-top:2vh;
+    font-size: 20pt;
+}
+
+/* Defiinndo a imagem */
+#garota_pc{
+    height: 20vh;
+    width: 70vw;
+    border-radius:20px;
+    margin: 40px;
+}
+
+#redefinicaoSenha > input{
+    width: 60vw;
+    height: 6vh;
+    border-radius: 12px;
+    background-color: #e52020;
+    border:none;
+    box-shadow: 1px 1px 1px  #000000;
+    margin-bottom: 4vh;
+    margin-left: 12vw;
+    margin-top:5vh;
+    font-size: 12pt;
+    padding-left: 12px;
+}
+
+#redefinicaoSenha > input::placeholder{
+    color:#f0e798;
+    font-size: 12pt;
+    padding-left: 10px;
+    font-weight: 700;
 }
