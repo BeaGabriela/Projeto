@@ -5,10 +5,13 @@ function Entrar(){
   //Adiciona o conteudo ativo
   wave.classList.add('active');
 
-  //Define o tempo que o conteudo cubrira a tela
-  setTimeout(() => {
-    wave.classList.remove('active');
-  }, 3000);
+// Espera 3 segundos (tempo da animação), depois remove e muda de página
+setTimeout(() => {
+  wave.classList.remove('active');
+
+  // Agora sim, muda de tela após o efeito
+  window.location.href = "../Paginas/Home.html";
+}, 3000);
 };
 
 //Função que abrirá o modal de esqueceu senha
