@@ -130,8 +130,13 @@ h3{
 
 }
 
-/* adicionando um modal que sobrepnha toda a tela */
-.EsqueceuSenha{
+
+
+
+/* MODAL DE ESQUECEU A SENHA */
+
+/* adicionando um modal que sobrepnha toda a tela, incluido o de esquecue a senha como de novos usaurios */
+.EsqueceuSenha, .NovoUsuario{
     position:absolute;
     top:0;
     left:0;
@@ -147,23 +152,23 @@ h3{
 }
 
 /* Criando o quadro onde terá as informações */
-#EsqueceuSenhaQuadro{
+#EsqueceuSenhaQuadro, #NovoUsuarioQuadro{
      background-color: #f9cb43;
      width: 90vw;
      height:80vh;
      margin-top: 10vh;
-     margin-left: 5vw;
-        border-radius:20px;
+     margin-left: 4vw;
+     border-radius:20px;
 }
 
 /* Definindo o p, o texto */
-#EsqueceuSenhaQuadro > p{
+#EsqueceuSenhaQuadro > p, #NovoUsuarioQuadro > p{
     margin-left:76vw;
     padding-top:2vh;
     font-size: 20pt;
 }
 
-/* Defiinndo a imagem */
+/* Defiinndo a imagem do modal ed esqueceu senha*/
 #garota_pc{
     height: 20vh;
     width: 70vw;
@@ -171,6 +176,7 @@ h3{
     margin: 40px;
 }
 
+/* Estilizando o input de esqueceu a senha */
 #redefinicaoSenha > input{
     width: 60vw;
     height: 6vh;
@@ -185,7 +191,42 @@ h3{
     padding-left: 12px;
 }
 
+/* Alterando o placeholder dos inputs do redefinir a senha */
 #redefinicaoSenha > input::placeholder{
+    color:#f0e798;
+    font-size: 12pt;
+    padding-left: 10px;
+    font-weight: 700;
+}
+
+
+
+
+/* MODAL DE NOVOSO USUARIOS */
+
+#NovoUsuarioImagem{
+    height: 20vh;
+    width: 60vw;
+    border-radius:20px;
+    margin: 20px;
+}
+
+/* Estilizando o input de novos usaurios */
+#inputsNovoUsuario > input{
+    width: 60vw;
+    height: 6vh;
+    border-radius: 12px;
+    background-color: #e52020;
+    border:none;
+    box-shadow: 1px 1px 1px  #000000;
+    margin-left: 12vw;
+    margin-top:-1vh;
+    font-size: 12pt;
+    padding-left: 12px;
+}
+
+/* Alterando o placeholder dos inputs donovos ussuarios */
+#inputsNovoUsuario > input::placeholder{
     color:#f0e798;
     font-size: 12pt;
     padding-left: 10px;
