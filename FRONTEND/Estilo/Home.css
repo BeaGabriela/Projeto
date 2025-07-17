@@ -1,0 +1,58 @@
+*{
+    padding:0;
+    margin:0;
+}
+
+body{
+    background-color:#e52020;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    color: #fff;
+    
+}
+
+main{
+    text-align: center;
+}
+
+#buscarAlimentos{
+    width: 100vw;
+    display:flex;
+    justify-content: center;
+    margin-top: 10vh;
+}
+
+/* Estilizando o input de pesquisa */
+input{
+    width: 60vw;
+    height: 6vh;
+    border-radius: 12px;
+    background-color: #fffffff3;
+    border:none;
+    box-shadow: 1px 1px 1px  #000;
+    margin-bottom: 3vh;
+    font-size: 12pt;
+    padding-left: 12px;
+}
+
+/* Definindo as caracteristicas das palavras que estão dentro dos inputs */
+input::placeholder{
+    color:#0000005b;
+    font-size: 12pt;
+    padding-left: 4px;
+    font-weight: 700;
+}
+
+#buscarAlimentos >  i{
+    color: #fff;
+    box-shadow: 1px 1px 1px #fff;
+    padding: 3px 8px;
+    height: 5vh;
+    border-radius: 10px;
+    margin: 0vh 10px;
+
+}
