@@ -34,18 +34,18 @@
     </main>
     <!-- O nav agrega os seguintes conteudos -->
     <nav>
-        <p>Esqueceu a senha?</p>
-        <h3>Novo Usuário</h3>
+        <p onclick='AbrirModalEsqueceuSenha()'>Esqueceu a senha?</p>
+        <h3 onclick="AbrirModalNovoUsuario()">Novo Usuário</h3>
     </nav>
 
 
 
     <!-- Modal de esqueceu a senha -->
-    <div class="EsqueceuSenha">
+    <div class="EsqueceuSenha modal ">
         <div id="EsqueceuSenhaQuadro">
             <p onclick="fecharModalEsqueceuSenha()">X</p>
             <div>
-                <img id="garota_pc" src="../Imagens/garota_pc.png"/>
+                <img id="garota_pc" src="../Imagens/garota_pc.png" />
                 <nav id="redefinicaoSenha">
                     <p>Digite seu email para redefinição de senha:</p>
                     <input type="email" placeholder='Email' required />
@@ -53,6 +53,27 @@
                 <button>Enviar</button>
             </div>
         </div>
+    </div>
+
+
+    <!-- Modal de Novos usuarios -->
+    <div class='NovoUsuario modal'>
+        <div id="NovoUsuarioQuadro">
+            <p onclick="fecharModalNovosUsaurios()">X</p>
+            <div>
+                <img src="../Imagens/NovoUser.png" id='NovoUsuarioImagem'>
+                <nav id="inputsNovoUsuario">
+                    <p>Digite para cadastro:</p>
+                    <br>
+                    <input type="text" placeholder='Nome' required>
+                    <input type="email" placeholder='Email' required>
+                    <input type="password" placeholder='Senha' required>
+                    <input type="text" placeholder='CPF' required>
+                </nav>
+                <button>Cadastrar</button>
+            </div>
+        </div>
+
     </div>
 
     <script src="../Javascript/Principal_login.js"></script>
