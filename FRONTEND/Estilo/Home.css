@@ -56,3 +56,53 @@ input::placeholder{
     margin: 0vh 10px;
 
 }
+
+/* Editando a nav que contem o card da pizzas */
+nav{
+    width: 80vw;
+    height: 60vh;
+    background-color: #e7900d;
+    box-shadow: 1px 1px 1px 1px #000;
+    margin: 4vh 5vh;
+    border-radius: 15px;
+}
+
+/* Editando a imagem do card */
+nav > img{
+    height: 30vh;
+    border-radius: 20px;
+    padding: 3vh;
+}
+
+/* Nome da pizza */
+#infoPizzas > h2{
+    text-align: left;
+    margin-left: 4vw;
+}
+
+/* informações das pizzas, da div que contem a descrição dos ingredientes */
+#infoPizzas > div{
+    text-align: center;
+    margin: 5vh;
+}
+
+/* Div que contem o favorito e o valor */
+#favorito_valor{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* Alterando o design do valor */
+#valor{
+    font-weight: 800;
+    font-family: 25pt;
+
+}
+
+footer{
+    display:flex;
+    justify-content: space-between;
+}
+
+
